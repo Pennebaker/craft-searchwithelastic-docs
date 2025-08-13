@@ -310,6 +310,6 @@ If upgrading from a version with the broken aggregation template:
 
 ## See Also
 
-- [Aggregations Guide](../usage/aggregations-guide.md) - Using aggregations in templates
-- [Template Integration](../usage/template-integration.md) - Twig template usage
-- [ElasticsearchService API](elasticsearch-service-api.md) - Service layer documentation
+- [Aggregations Guide](/usage/aggregations-guide) - Using aggregations in templates
+- [Template Integration](/usage/template-integration) - Twig template usage
+- [Services API](/development/services-api) - Service layer documentation

@@ -346,6 +346,6 @@ If aggregations return but buckets are empty:
 
 ## See Also
 
-- [Simple Faceted Search Template](/templates/simple-faceted-search.twig)
-- [Search Examples Template](/templates/search-examples.twig)
 - [Template Integration Guide](template-integration.md)
+- [Faceted Search Examples](/examples/faceted-search)
+- [Basic Search Examples](/examples/basic-search)

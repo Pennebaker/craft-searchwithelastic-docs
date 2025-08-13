@@ -2,6 +2,11 @@ export default {
   title: 'Search with Elastic',
   description: 'Comprehensive Elasticsearch integration for Craft CMS 4.x with real-time indexing, advanced querying, and production reliability',
   base: '/',
+  
+  ignoreDeadLinks: [
+    // Ignore template file references that don't exist in docs
+    /\.twig$/
+  ],
 
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
