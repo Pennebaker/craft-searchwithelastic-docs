@@ -1,0 +1,9 @@
+.idea
+# macOS
+.DS_Store
+# vitepress
+.vitepress/cache
+# Dependency directories
+node_modules/
+# build output
+dist

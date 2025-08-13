@@ -1,0 +1,21 @@
+{
+  "name": "search-with-elastic-docs",
+  "version": "1.0.0",
+  "description": "Documentation for Search with Elastic CraftCMS plugin",
+  "private": true,
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.0.0"
+  },
+  "keywords": [
+    "craftcms",
+    "elasticsearch",
+    "search",
+    "documentation"
+  ],
+  "packageManager": "yarn@4.5.2+sha224.c2e2e9ed3cdadd6ec250589b3393f71ae56d5ec297af11cec1eba3b4"
+}
