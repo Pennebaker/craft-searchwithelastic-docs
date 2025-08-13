@@ -30,7 +30,7 @@ features:
     details: Indexes entries, assets, categories, and Commerce products
 ---
 
-::: warning
+::: info
 These docs were written by AI and may contain errors. Please [report](https://github.com/Pennebaker/craft-searchwithelastic-docs/issues) any issues or inconsistencies.
 :::
 
