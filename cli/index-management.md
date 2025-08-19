@@ -14,6 +14,30 @@ The Search with Elastic plugin provides comprehensive CLI commands for managing 
 | `reindex-digital-products` | Reindex digital products | Update digital product search data |
 | `recreate-empty-indexes` | Recreate empty indexes | Reset index structure |
 
+## Reindexing Modes
+
+All reindexing commands support the `--mode` option to control which elements are indexed:
+
+| Mode | Description | Use Case |
+|------|-------------|----------|
+| `reset` | Recreate indexes and reindex all elements (default) | Fresh start, mapping changes |
+| `all` | Reindex all elements without recreating indexes | Full reindex preserving structure |
+| `missing` | Index only elements not currently in the index | Add new content |
+| `updated` | Index only elements that have been modified | Sync recent changes |
+| `missing-updated` | Index missing and updated elements | Incremental update |
+
+**Usage:**
+```bash
+# Default mode (reset)
+php craft elasticsearch/reindex-all
+
+# Specify mode explicitly
+php craft elasticsearch/reindex-all --mode=updated
+
+# Short syntax
+php craft elasticsearch/reindex-entries -m missing
+```
+
 ## Global Reindexing
 
 ### Reindex All Content
@@ -21,12 +45,12 @@ The Search with Elastic plugin provides comprehensive CLI commands for managing 
 Reindexes all supported element types (entries, assets, categories, products, and digital products) across all sites.
 
 ```bash
-php craft elasticsearch/reindex-all
+php craft elasticsearch/reindex-all [--mode=<mode>]
 ```
 
 **Example Output:**
 ```
-Reindexing 1,247 everything ...
+Reindexing 1,247 everything (Mode: Reset & Index) ...
     - [1/1247] Reindexing Homepage (1) ... done
     - [2/1247] Reindexing About Us (2) ... done
     - [3/1247] Reindexing Product A (15) ... done
@@ -36,14 +60,14 @@ Done reindexing everything.
 ```
 
 **When to Use:**
-- For initial plugin installation
-- For major configuration changes
-- For field mapping changes
-- When switching Elasticsearch versions
-- During site migrations
+- For initial plugin installation (use `reset`)
+- For major configuration changes (use `reset`)
+- For field mapping changes (use `reset`)
+- For incremental updates (use `updated` or `missing-updated`)
+- During site migrations (use `reset`)
 
 ::: tip Performance Considerations
-Large sites may take considerable time to reindex. Consider using specific element type commands during maintenance windows.
+Large sites may take considerable time to reindex. Use incremental modes (`updated`, `missing`, `missing-updated`) during maintenance windows to reduce processing time.
 :::
 
 ## Element-Specific Reindexing
@@ -53,7 +77,7 @@ Large sites may take considerable time to reindex. Consider using specific eleme
 Reindexes all entry elements across all sections and sites.
 
 ```bash
-php craft elasticsearch/reindex-entries
+php craft elasticsearch/reindex-entries [--mode=<mode>]
 ```
 
 **Example Output:**
@@ -78,7 +102,7 @@ Done reindexing entries (1 warning).
 Reindexes all asset elements across all volumes and sites.
 
 ```bash
-php craft elasticsearch/reindex-assets
+php craft elasticsearch/reindex-assets [--mode=<mode>]
 ```
 
 **Example Output:**
@@ -103,7 +127,7 @@ Done reindexing assets (1 skipped).
 Reindexes all category elements across all category groups and sites.
 
 ```bash
-php craft elasticsearch/reindex-categories
+php craft elasticsearch/reindex-categories [--mode=<mode>]
 ```
 
 **Example Output:**
@@ -128,7 +152,7 @@ Done reindexing categories.
 Reindexes all Craft Commerce product elements across all product types and sites.
 
 ```bash
-php craft elasticsearch/reindex-products
+php craft elasticsearch/reindex-products [--mode=<mode>]
 ```
 
 **Example Output:**
@@ -157,7 +181,7 @@ This command requires Craft Commerce to be installed and enabled.
 Reindexes all digital product elements across all sites.
 
 ```bash
-php craft elasticsearch/reindex-digital-products
+php craft elasticsearch/reindex-digital-products [--mode=<mode>]
 ```
 
 **Example Output:**
@@ -216,20 +240,24 @@ This command permanently deletes all indexed content. You'll need to run reindex
 
 ### Complete Site Reindex
 ```bash
-# Recreate indexes with fresh structure
-php craft elasticsearch/recreate-empty-indexes
-
-# Reindex all content
+# Option 1: Use reset mode (default)
 php craft elasticsearch/reindex-all
+
+# Option 2: Manual recreation then index
+php craft elasticsearch/recreate-empty-indexes
+php craft elasticsearch/reindex-all --mode=all
 ```
 
 ### Selective Content Update
 ```bash
-# Update only entries for content changes
-php craft elasticsearch/reindex-entries
+# Update only modified entries
+php craft elasticsearch/reindex-entries --mode=updated
 
-# Update only products for Commerce changes
-php craft elasticsearch/reindex-products
+# Index missing products
+php craft elasticsearch/reindex-products --mode=missing
+
+# Update both missing and modified assets
+php craft elasticsearch/reindex-assets --mode=missing-updated
 ```
 
 ### Development Environment Setup

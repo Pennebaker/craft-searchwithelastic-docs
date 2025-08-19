@@ -76,21 +76,27 @@ Configure how the plugin connects to your Elasticsearch instance.
 
 ### Elasticsearch endpoint
 
-The `elasticsearchEndpoint` setting defines where your Elasticsearch server runs:
+The `elasticsearchEndpoint` setting defines where your Elasticsearch server runs. It supports both traditional `hostname:port` format and full URLs with protocols:
 
 ```php
-// Local development
+// Local development (hostname:port format)
 'elasticsearchEndpoint' => 'localhost:9200',
 
-// Docker container
+// Docker container (hostname:port format)
 'elasticsearchEndpoint' => 'elasticsearch:9200',
 
-// Remote server with HTTPS
+// Full URL with protocol (recommended for remote servers)
 'elasticsearchEndpoint' => 'https://my-elasticsearch.example.com:9200',
 
-// Using environment variables
+// Using environment variables (recommended for production)
 'elasticsearchEndpoint' => '$ELASTICSEARCH_ENDPOINT',
 ```
+
+::: tip Protocol Handling
+- If no protocol is specified in `hostname:port` format, the plugin will use HTTP by default
+- Full URLs with `https://` will use HTTPS
+- Environment variables are automatically parsed using Craft's `App::parseEnv()`
+:::
 
 ### Authentication
 
